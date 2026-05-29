@@ -672,7 +672,7 @@ router.use('/sensing', sensingRouter);
 // ── SERVICE CATEGORIES ────────────────────────────────────────────
 const serviceCategoriesRouter = Router();
 
-serviceCategoriesRouter.get('/', authenticate, (req: AuthRequest, res: Response) => {
+serviceCategoriesRouter.get('/', (req: Request, res: Response) => {
   try {
     const categories = db.prepare('SELECT * FROM service_categories ORDER BY name ASC').all();
     res.json({ categories });
