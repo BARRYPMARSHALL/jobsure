@@ -136,6 +136,142 @@ ownerRouter.get('/dashboard', authenticate, async (_req: AuthRequest, res: Respo
 
 app.use('/api', ownerRouter);
 
+// Admin Dashboard (agent cycles, partner sync, Stripe config)
+const adminRouter = Router();
+
+adminRouter.get('/admin/dashboard', authenticate, async (_req: AuthRequest, res: Response) => {
+  try {
+    // 1. Agent cycle status — latest activity per flywheel agent
+    const agentStatuses = db.prepare(`
+      SELECT
+        agent_name,
+        MAX(created_at) as last_active,
+        (SELECT status FROM agent_activity_log a2 WHERE a2.agent_name = a1.agent_name ORDER BY created_at DESC LIMIT 1) as last_status,
+        (SELECT action_summary FROM agent_activity_log a2 WHERE a2.agent_name = a1.agent_name ORDER BY created_at DESC LIMIT 1) as last_action
+      FROM agent_activity_log a1
+      WHERE agent_name IN ('sensing', 'intake', 'reviews', 'marketing', 'governance', 'learning')
+      GROUP BY agent_name
+    `).all() as any[];
+
+    // Map flywheel agents to display names
+    const flywheelDefs = [
+      { key: 'sensing', label: 'Sensing', icon: '📡', desc: 'Demand signal detection' },
+      { key: 'intake', label: 'Intake', icon: '📥', desc: 'Lead capture & qualification' },
+      { key: 'marketing', label: 'Attract', icon: '🎯', desc: 'Landing pages & campaigns' },
+      { key: 'bookings', label: 'Book', icon: '📅', desc: 'Appointment booking' },
+      { key: 'reviews', label: 'Review', icon: '⭐', desc: 'Review chasing & ratings' },
+    ];
+
+    const agentCycle = flywheelDefs.map(def => {
+      const found = agentStatuses.find((a: any) => a.agent_name === def.key);
+      const lastActive = found?.last_active;
+      const isRunning = lastActive && (Date.now() - new Date(lastActive).getTime()) < 86400000; // 24h
+      return {
+        ...def,
+        status: isRunning ? 'running' : (lastActive ? 'idle' : 'never'),
+        lastActive: lastActive || null,
+        lastAction: found?.last_action || null,
+        lastStatus: found?.last_status || null,
+      };
+    });
+
+    // Also check bookings as the "Book" agent metric
+    const bookingLast = db.prepare("SELECT created_at as last_active FROM bookings ORDER BY created_at DESC LIMIT 1").get() as any;
+    const bookIdx = agentCycle.findIndex(a => a.key === 'bookings');
+    if (bookIdx >= 0 && bookingLast) {
+      agentCycle[bookIdx].lastActive = bookingLast.last_active;
+      agentCycle[bookIdx].status = (Date.now() - new Date(bookingLast.last_active).getTime()) < 86400000 ? 'running' : 'idle';
+    }
+
+    // 2. Partner sync status
+    const activePartners = db.prepare("SELECT id, company_name, trade_type, is_active, onboarding_complete, total_jobs, rating, updated_at FROM partners WHERE is_active = 1").all() as any[];
+    const partnerSyncs = db.prepare(`
+      SELECT partner_id, MAX(synced_at) as last_sync, status as sync_status
+      FROM partner_sync_log GROUP BY partner_id
+    `).all() as any[];
+
+    const partnersWithSync = activePartners.map((p: any) => {
+      const sync = partnerSyncs.find((s: any) => s.partner_id === p.id);
+      return {
+        id: p.id,
+        companyName: p.company_name,
+        tradeType: p.trade_type,
+        onboarded: !!p.onboarding_complete,
+        totalJobs: p.total_jobs || 0,
+        rating: p.rating || 0,
+        lastSync: sync?.last_sync || null,
+        syncStatus: sync?.sync_status || 'unknown',
+        updatedAt: p.updated_at,
+      };
+    });
+
+    // 3. Stripe payout configuration
+    const configRows = db.prepare('SELECT key, value FROM system_config').all() as any[];
+    const configMap: Record<string, string> = {};
+    for (const row of configRows) configMap[row.key] = row.value;
+
+    // 4. System health
+    const totalLeads = db.prepare('SELECT COUNT(*) as c FROM leads').get() as any;
+    const totalBookings = db.prepare('SELECT COUNT(*) as c FROM bookings').get() as any;
+    const totalJobs = db.prepare('SELECT COUNT(*) as c FROM jobs').get() as any;
+    const pendingReviews = db.prepare("SELECT COUNT(*) as c FROM human_review_queue WHERE status = 'pending'").get() as any;
+    const totalPartners = activePartners.length;
+
+    res.json({
+      agentCycle,
+      partners: partnersWithSync,
+      partnerCount: totalPartners,
+      stripe: {
+        payoutSchedule: configMap.stripe_payout_schedule || 'weekly',
+        payoutDelayDays: parseInt(configMap.stripe_payout_delay_days || '2'),
+        platformFeePercent: parseInt(configMap.stripe_platform_fee_percent || '15'),
+        minimumPayoutDollars: (parseInt(configMap.stripe_minimum_payout || '5000') / 100).toFixed(2),
+        connectedAccount: configMap.stripe_connected_account || 'pending',
+        ownerPayoutSplit: parseInt(configMap.owner_payout_split || '85'),
+      },
+      system: {
+        totalLeads: totalLeads?.c || 0,
+        totalBookings: totalBookings?.c || 0,
+        totalJobs: totalJobs?.c || 0,
+        pendingReviews: pendingReviews?.c || 0,
+        activePartners: totalPartners,
+      },
+    });
+  } catch (err: any) {
+    console.error('[Admin Dashboard] Error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Config update endpoint
+adminRouter.put('/admin/config', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const { key, value } = req.body;
+    if (!key) return res.status(400).json({ error: 'key is required' });
+    const allowedKeys = ['stripe_payout_schedule', 'stripe_payout_delay_days', 'stripe_platform_fee_percent', 'stripe_minimum_payout', 'stripe_connected_account', 'owner_payout_split'];
+    if (!allowedKeys.includes(key)) return res.status(400).json({ error: `Unknown config key: ${key}` });
+    db.prepare("INSERT OR REPLACE INTO system_config (key, value, description, updated_at) VALUES (?, ?, (SELECT description FROM system_config WHERE key = ?), datetime('now'))").run(key, String(value), key);
+    res.json({ success: true, key, value });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Partner sync log endpoint
+adminRouter.post('/admin/partner-sync', authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    const { partnerId } = req.body;
+    if (!partnerId) return res.status(400).json({ error: 'partnerId required' });
+    const id = require('crypto').randomUUID();
+    db.prepare('INSERT INTO partner_sync_log (id, partner_id, sync_type, status, details) VALUES (?, ?, ?, ?, ?)').run(id, partnerId, 'ping', 'success', 'Scheduled sync check');
+    res.json({ success: true, syncedAt: new Date().toISOString() });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.use('/api', adminRouter);
+
 // OS Framework routes (tacit knowledge, learning, governance)
 import {
   captureWorkflow, interviewWorkflow, getWorkflows,

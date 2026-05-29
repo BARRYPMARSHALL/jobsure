@@ -8,6 +8,10 @@ const navItems = [
   { to: '/app/bookings', label: 'Bookings', icon: '📅' },
 ];
 
+const adminItems = [
+  { to: '/app/admin', label: 'Admin', icon: '⚙️' },
+];
+
 export default function Layout({ user, setUser }: { user: any; setUser: (u: any) => void }) {
   const navigate = useNavigate();
   const handleLogout = () => { setToken(null); setUser(null); navigate('/login'); };
@@ -40,7 +44,24 @@ export default function Layout({ user, setUser }: { user: any; setUser: (u: any)
               <span>{item.label}</span>
             </NavLink>
           ))}
-        </nav>
+          </nav>
+          <div className="px-3 mb-1">
+          <div className="h-px bg-white/5 mb-3" />
+          {adminItems.map(item => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                  isActive ? 'bg-accent/10 text-accent border border-accent/20' : 'text-slate-500 hover:bg-slate-800 hover:text-white'
+                }`
+              }
+            >
+              <span>{item.icon}</span>
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
+          </div>
         <div className="p-4 border-t border-slate-800">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400 text-sm font-bold">

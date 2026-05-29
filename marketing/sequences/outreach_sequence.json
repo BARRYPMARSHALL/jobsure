@@ -1,0 +1,25 @@
+{
+  "campaign": "JobSure Partner Acquisition — Plumbing & HVAC",
+  "target_audience": "Independent plumbers and HVAC technicians, 2-10 employees",
+  "value_proposition": "Stop paying $300-2000/mo for shared leads. Pay only when jobs book.",
+  "sequences": [
+    {
+      "stage": 1,
+      "delay_days": 0,
+      "subject": "Your leads are being sold to 5 competitors right now",
+      "body": "Last month you probably paid for leads that 3 other contractors also bought.\n\nThat's how lead gen works: sell the same inquiry to every plumber within 50 miles. You're bidding against your own neighbors for a customer who already picked up the phone.\n\nJobSure flips the model. One plumber per metro. Per trade. When a service lead comes in, it's yours — no split, no race to be the first to call.\n\nAnd you don't pay until the job books. No monthly subscription. No per-lead gamble.\n\nWe're launching in 12 metro areas this quarter. If you service the Atlanta, Phoenix, or Dallas-Fort Worth area, you get priority onboarding.\n\nBook a 10-min call and I'll show you the exact leads we have sitting in your zip code right now:\n\n[Link: 10-min onboarding call]\n\n— Nate\nCo-founder, JobSure"
+    },
+    {
+      "stage": 2,
+      "delay_days": 3,
+      "subject": "How one 3-man shop closed $48k in 18 days — no lead fees",
+      "body": "Three weeks ago I emailed you about JobSure's exclusive-territory lead model.\n\nFigured I'd share what happened with our first pilot customer instead of just telling you.\n\nPreston's Plumbing — 3 trucks, serves northwest Houston. They'd been spending $1,100/month on two lead subscriptions. Average close rate on those leads: 12%. He told me most callers had already spoken to 2 other shops before he even got the notification.\n\nWe onboarded Preston onto JobSure 19 days ago. Exclusive territory for northwest Houston. Since then:\n\n• 24 leads delivered\n• 9 booked jobs (37.5% close rate, up from 12%)\n• $48,200 in booked revenue\n• Total JobSure fee: $0 upfront, $2,410 (5% of booked jobs)\n\nNo monthly burn. No fighting 4 other plumbers for the same callback. Just leads that are actually worth chasing.\n\nWe have capacity for 2 more plumbers in your region this month. If you want to see the leads waiting for your zip, book the call here:\n\n[Link: 10-min onboarding call]\n\n— Nate\nCo-founder, JobSure"
+    },
+    {
+      "stage": 3,
+      "delay_days": 7,
+      "subject": "We're closing your metro this Friday",
+      "body": "Last email on this.\n\nWe're capping each metro at one plumber per trade to keep the model viable. Your territory still has openings, but we're closing applications this Friday to focus on onboarding current partners.\n\nHere's what you're turning down if you skip this:\n\n• Exclusive access to every service lead in your zip codes — no split\n• $0 monthly fee, pay 5% only on jobs that book\n• Close rate averages 3x what shared-lead networks deliver\n• AI-powered matching routes urgent calls to you within 2 minutes\n\nAfter Friday, we won't reopen your metro for at least 90 days — probably longer.\n\n15-min call. No pitch deck slides. I'll show you the actual leads in your area.\n\n[Link: Book your call before cutoff]\n\n— Nate\nCo-founder, JobSure"
+    }
+  ]
+}

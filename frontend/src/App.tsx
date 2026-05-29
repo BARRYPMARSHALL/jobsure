@@ -7,6 +7,7 @@ import OwnerDashboard from './pages/OwnerDashboard';
 import PartnersPage from './pages/PartnersPage';
 import LeadsPage from './pages/LeadsPage';
 import BookingsPage from './pages/BookingsPage';
+import AdminDashboard from './pages/AdminDashboard';
 import Layout from './components/Layout';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="partners" element={<PartnersPage />} />
           <Route path="leads" element={<LeadsPage />} />
           <Route path="bookings" element={<BookingsPage />} />
+          <Route path="admin" element={<AdminDashboard />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

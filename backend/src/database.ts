@@ -156,7 +156,46 @@ export function initializeDatabase(): void {
       reviewed_by TEXT, reviewed_at TEXT, reviewer_notes TEXT,
       checkpoint_id TEXT, created_at TEXT DEFAULT (datetime('now'))
     );
+
+    -- Admin: partner sync status
+    CREATE TABLE IF NOT EXISTS partner_sync_log (
+      id TEXT PRIMARY KEY, partner_id TEXT NOT NULL,
+      sync_type TEXT NOT NULL DEFAULT 'ping',
+      status TEXT DEFAULT 'success', details TEXT,
+      synced_at TEXT DEFAULT (datetime('now'))
+    );
+
+    -- Admin: system configuration (Stripe payouts, etc.)
+    CREATE TABLE IF NOT EXISTS system_config (
+      key TEXT PRIMARY KEY, value TEXT NOT NULL,
+      description TEXT, updated_at TEXT DEFAULT (datetime('now'))
+    );
   `);
+
+  // Seed system config defaults
+  const configCount = db.prepare('SELECT COUNT(*) as c FROM system_config').get() as any;
+  if (configCount.c === 0) {
+    db.prepare(`INSERT OR IGNORE INTO system_config (key, value, description) VALUES (?, ?, ?)`).run(
+      'stripe_payout_schedule', 'weekly', 'Stripe payout frequency: daily, weekly, monthly'
+    );
+    db.prepare(`INSERT OR IGNORE INTO system_config (key, value, description) VALUES (?, ?, ?)`).run(
+      'stripe_payout_delay_days', '2', 'Business days after job completion before payout'
+    );
+    db.prepare(`INSERT OR IGNORE INTO system_config (key, value, description) VALUES (?, ?, ?)`).run(
+      'stripe_platform_fee_percent', '15', 'Platform fee percentage per booked job'
+    );
+    db.prepare(`INSERT OR IGNORE INTO system_config (key, value, description) VALUES (?, ?, ?)`).run(
+      'stripe_minimum_payout', '5000', 'Minimum payout in cents ($50.00)'
+    );
+    db.prepare(`INSERT OR IGNORE INTO system_config (key, value, description) VALUES (?, ?, ?)`).run(
+      'stripe_connected_account', 'pending', 'Stripe Connect account ID for platform payouts'
+    );
+    db.prepare(`INSERT OR IGNORE INTO system_config (key, value, description) VALUES (?, ?, ?)`).run(
+      'owner_payout_split', '85', 'Percentage of job revenue paid to contractor'
+    );
+  }
+
+  console.log('[DB] Admin tables initialized');
 
   // Seed service categories
   const catCount = db.prepare('SELECT COUNT(*) as c FROM service_categories').get() as any;
