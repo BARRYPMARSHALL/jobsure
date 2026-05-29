@@ -1,0 +1,29 @@
+# Build backend
+FROM node:20-alpine AS backend-build
+WORKDIR /app/backend
+COPY backend/package*.json ./
+RUN npm ci
+COPY backend/ ./
+RUN npx tsc
+
+# Build frontend
+FROM node:20-alpine AS frontend-build
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm ci
+COPY frontend/ ./
+RUN npm run build
+
+# Production image
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=backend-build /app/backend/dist ./dist
+COPY --from=backend-build /app/backend/node_modules ./node_modules
+COPY --from=backend-build /app/backend/package.json ./
+COPY --from=frontend-build /app/frontend/dist ./frontend/dist
+
+EXPOSE 3101
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:3101/api/service-categories || exit 1
+
+CMD ["node", "dist/server.js"]
