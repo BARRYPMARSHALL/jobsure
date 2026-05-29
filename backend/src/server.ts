@@ -227,13 +227,34 @@ osRouter.get('/os/governance/reviews/stats', authenticate, (req: AuthRequest, re
 
 app.use('/api', osRouter);
 
-// Serve frontend
-const frontendDist = path.join(__dirname, '../../frontend/dist');
+// Serve frontend — try multiple possible locations
+function findFrontendDist(): string {
+  const candidates = [
+    path.join(__dirname, '../../frontend/dist'),
+    path.join(process.cwd(), 'frontend/dist'),
+    path.join(__dirname, '../frontend/dist'),
+    '/app/frontend/dist',
+    '/frontend/dist',
+  ];
+  for (const p of candidates) {
+    try { if (require('fs').statSync(path.join(p, 'index.html')).isFile()) return p; }
+    catch { continue; }
+  }
+  console.warn('[Frontend] No frontend dist found at any candidate path, using fallback:', candidates[0]);
+  return candidates[0];
+}
+const frontendDist = findFrontendDist();
+console.log('[Frontend] Serving static from:', frontendDist);
 app.use(express.static(frontendDist));
 app.use((req, res, next) => {
   if (req.path.startsWith('/api')) return next();
   if (req.path.includes('.')) return next();
-  res.sendFile(path.join(frontendDist, 'index.html'));
+  res.sendFile(path.join(frontendDist, 'index.html'), err => {
+    if (err) {
+      console.warn('[Frontend] Cannot send index.html:', err.message);
+      res.status(200).send('<html><head><title>JobSure API</title></head><body><h1>JobSure API</h1><p>Backend running. Frontend build pending.</p><p>Endpoints at <code>/api/*</code></p></body></html>');
+    }
+  });
 });
 
 app.use(notFound);
