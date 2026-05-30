@@ -7,112 +7,6 @@
 
 ---
 
-## 📈 Full Business Case
-
-### The Problem
-
-The home services market is broken for everyone involved:
-
-**For Homeowners:**
-- Angi/Thumbtack flood you with calls from 3+ contractors who may or may not show up
-- No accountability — you pay for the lead, not the result
-- Quality is a lottery; reviews can be gamed
-- Scheduling takes days of back-and-forth
-- No guarantee the job will actually get done
-
-**For Trade Professionals:**
-- Paying $25–$70 per unqualified lead that may never convert
-- 40%+ of leads are wrong fit (wrong service, wrong area, wrong budget)
-- Admin overhead: answering calls, qualifying leads, scheduling, chasing reviews
-- No recurring revenue model — every month starts at zero
-- Small operators can't afford marketing or SEO
-
-**The Gap:** No platform exists that guarantees outcomes *for both sides* — homeowner gets a completed job, partner gets a confirmed booking. Every incumbent optimises for lead volume, not job completion.
-
-### The Solution
-
-JobSure is a **ghost-managed platform** — meaning it runs itself. Seven autonomous AI agents handle everything between lead capture and job completion:
-
-| Capability | How JobSure Solves It |
-|---|---|
-| **Lead Qualification** | Intake agent scores leads 0–100 on fit, budget, urgency, location. Only quality leads reach partners. |
-| **Auto-Matching** | Best-fit partner is algorithmically assigned based on service, availability, rating, and proximity. No human dispatching needed. |
-| **Guaranteed Booking** | Lead converts to booking automatically. No "I'll call you back." |
-| **Review Pipeline** | Reviews agent chases every completed job. Ratings feed back into partner scores. Self-reinforcing quality loop. |
-| **SEO Content Engine** | Marketing agent generates hyperlocal landing pages (storm damage, seasonal specials, emergency 24/7) on a 12-hour refresh cycle. Zero human content cost. |
-| **Market Sensing** | OS Framework monitors competitors, regulations, weather events, and market shifts. Produces trend alerts. |
-| **Self-Optimisation** | Learning loop tracks agent outcomes, finds failure patterns, and generates improvement suggestions. The system improves itself. |
-
-**Core promise:** Partners only pay for completed, confirmed appointments. No per-lead charges. If the job doesn't happen, the partner doesn't pay.
-
-### Market Opportunity
-
-| Metric | Value |
-|---|---|
-| US home services market | **$600B+** (annual) |
-| Angi market cap (peak) | ~$2.5B (declining — trust eroded) |
-| Thumbtack valuation | ~$3.2B (pay-per-lead model) |
-| Average trade pro spend on lead gen | **$3,000–$8,000/year** |
-| Lead waste (wrong fit / no-show) | **40–60%** |
-| JobSure differentiator | **Pay-per-completed-job** + AI-managed operations |
-
-The incumbent model (pay-per-lead) is ripe for disruption. Trade professionals are tired of paying for calls that don't convert. Homeowners are tired of being sold to instead of served. JobSure flips the incentive: **we only make money when the job gets done.**
-
-### Revenue Model
-
-| Stream | Mechanics | Margin Characteristics |
-|---|---|---|
-| **Per-Booking Fee** | 15% of every completed job (configurable per partner) | High margin — no COGS beyond infrastructure and LLM API calls |
-| **Monthly Retainer** | Optional flat fee per partner for priority matching and premium placement | Pure margin — 100% after setup |
-| **Lead Boost** | Partners can pay extra for high-score leads (90+ qualification) | Upsell on existing infrastructure |
-| **Enterprise / Multi-City** | Per-city license for franchise operators expanding a partner network | Scalable — same software, new geography |
-
-**Unit Economics (Illustrative):**
-
-| Job Value | JobSure Fee (15%) | LLM Cost | Net Margin |
-|---|---|---|---|
-| $200 | $30 | ~$0.50 | **~98%** |
-| $500 | $75 | ~$0.50 | **~99%** |
-| $2,000 (roof/HVAC) | $300 | ~$0.50 | **~99.8%** |
-
-At 10 jobs/day across 20 partners, monthly revenue = **$9,000–$45,000** with negligible marginal cost.
-
-### Competitive Moat
-
-1. **Ghost-Managed Operations** — 7 autonomous agents run the entire business. No customer success team, no dispatchers, no content writers, no operations managers. The platform is the business.
-2. **Outcome-Based Pricing** — Partners pay for completed jobs, not leads. This aligns incentives completely and is a credible differentiator against Angi/Thumbtack.
-3. **Self-Optimising Flywheel** — The OS Framework (Tacit Knowledge → Sensing → Learning → Governance) means the system gets smarter every cycle. More completed jobs → more review data → better partner scores → better matches → more completed jobs.
-4. **Hyperlocal SEO Engine** — The marketing agent generates targeted landing pages for every service × location combination. No human SEO team needed.
-5. **Zero Human Overhead** — The entire stack (lead intake → booking → completion → review → content → sensing) runs on cron-driven AI agents. Labour cost is effectively zero.
-
-### Go-to-Market Strategy
-
-**Phase 1 — Single City (Current)**
-- Seed with 5–10 vetted trade partners in one metro area
-- Drive homeowner leads through SEO-generated landing pages + local referrals
-- Prove unit economics: $0.50 LLM cost per transaction at 15% take rate
-- Pipeline: see [Roadmap](#-roadmap)
-
-**Phase 2 — Multi-City Expansion**
-- Clone the partner network playbook per city
-- Marketing agent generates city-specific landing pages automatically
-- Sensing agent identifies ideal next markets based on competitor weakness and local demand
-
-**Phase 3 — Franchise / White-Label**
-- License the JobSure stack to local operators
-- Each franchise gets their own autonomous instance with local partner pool
-- Central oversight via OS Framework governance layer
-
-### Why Now
-
-- **LLM costs are collapsing** — running 7 agents costs less than a coffee per day
-- **Trust in legacy platforms is declining** — Angi's net promoter score has fallen 40% in 3 years
-- **AI-native operations are a first-mover advantage** — no competitor runs a fully autonomous platform
-- **Trade professionals are desperate** — 73% say lead quality is their #1 business problem (IBISWorld)
-- **Stripe Connect + AI makes pay-per-completion viable** — we can hold funds in escrow and release on job completion automatically
-
----
-
 ## 🚀 Quick Start
 
 ```bash
@@ -219,7 +113,7 @@ JobSure runs **7 AI agents** that operate on cron schedules — processing leads
 
 ### The Problem — A Broken $600B Industry
 
-Home-services lead generation is dominated by three platforms — **Angi**, **HomeAdvisor**, and **Thumbtack** — that together control ~65–70% of the online contractor lead marketplace. Despite their scale, all three operate on fundamentally **contractor-hostile** economic models:
+Home-services lead generation is dominated by three platforms — **Angi (NASDAQ: ANGI)**, **HomeAdvisor (IAC)**, and **Thumbtack** — that together control ~65–70% of the online contractor lead marketplace, processing millions of service requests annually. Despite their scale, all three operate on fundamentally **contractor-hostile** economic models:
 
 | Issue | Angi | HomeAdvisor | Thumbtack |
 |-------|------|-------------|-----------|
@@ -235,6 +129,32 @@ Home-services lead generation is dominated by three platforms — **Angi**, **Ho
 **The result:** Contractors pay $25–$300+ per lead, compete against 3–5 other shops on the same inquiry, and close only **~33% of leads** on average. On shared networks, close rates can fall as low as **11%** — meaning **67–89% of lead spend is wasted**.
 
 > *The FTC fined HomeAdvisor $7.2M in 2020 for marketing shared leads as "exclusive" or "screened" — the industry's structural deception is well-documented.*
+
+### Competitor Deep-Dive
+
+#### Angi (formerly Angie's List)
+
+| Metric | Detail |
+|---|---|
+| **Parent** | Angi Inc. (NASDAQ: ANGI) — rebranded 2021 |
+| **Business Model** | Dual: consumer subscription ($30–$100+/mo) + contractor pay-per-lead ($25–$300+) |
+| **Weaknesses** | High monthly costs with no lead volume guarantee; leads sold to 4–5 contractors simultaneously; reviews can be gamed; no booking integration or AI dispatch |
+
+#### HomeAdvisor (IAC / Angi Inc.)
+
+| Metric | Detail |
+|---|---|
+| **Parent** | IAC / Angi Inc. — merged operations 2021 |
+| **Business Model** | Pure pay-per-lead ($15–$300+) — no subscription required |
+| **Weaknesses** | $7.2M FTC fine (2020) for deceptive "exclusive/screened" lead marketing; shared leads destroy close rates (3–5% conversion on shared vs 30–50% exclusive); lead fraud and price-shoppers are common; no yield guarantee of any kind |
+
+#### Thumbtack
+
+| Metric | Detail |
+|---|---|
+| **Parent** | Thumbtack, Inc. (private) — founded 2008 |
+| **Business Model** | Pay-per-lead ($10–$100+) + bidding war dynamics |
+| **Weaknesses** | Contractors bid against each other in real-time, eroding margins; 35–50% of jobs go to the first responder (speed > quality); spend threshold system requires minimum monthly outlay; no exclusivity or lead vetting |
 
 ### The Solution — Ghost-Managed, Exclusive-Territory Lead Generation
 
@@ -254,15 +174,40 @@ JobSure inverts the traditional model entirely. Instead of selling contested lea
 
 ### The Market Opportunity
 
-- **$600+ billion** annual U.S. home services market
-- **500,000+** independent plumbing and HVAC contractors nationwide
-- Majority are:
-  1. Dissatisfied with existing lead generation platforms
-  2. Unable to staff 24/7 customer inquiry handling
-  3. Wasting 30–50% of marketing budget on unqualified/shared leads
-  4. Seeking predictable, outcome-based pricing
+| Metric | Value |
+|---|---|
+| U.S. home services market (annual) | **$600+ billion** |
+| Independent plumbing & HVAC contractors | **500,000+** nationwide |
+| Average trade pro spend on lead gen | **$3,000–$8,000/year** |
+| Lead waste (wrong fit / no-show) | **40–60%** |
+| Close rate on shared networks | **~11–33%** |
+
+The majority of independent contractors:
+1. Are dissatisfied with existing lead generation platforms
+2. Lack the staffing to handle 24/7 customer inquiries
+3. Waste 30–50% of marketing budget on unqualified or shared leads
+4. Would strongly prefer a predictable, outcome-based pricing model
 
 JobSure addresses the intersection of **AI automation, exclusive lead rights, and pay-per-performance pricing** — a market gap no incumbent has filled.
+
+### Revenue Model & Unit Economics
+
+| Stream | Mechanics | Margin |
+|---|---|---|
+| **Per-Booking Fee** | 15% of every completed job (configurable) | High margin — no COGS beyond infrastructure and LLM API calls |
+| **Monthly Retainer** | Fixed fee per partner for platform access, territory exclusivity, ghost-agent infrastructure | Pure margin — 100% after setup |
+| **Lead Boost** | Partners can pay extra for high-score leads (90+ qualification) | Upsell on existing infrastructure |
+| **Enterprise / Multi-City** | Per-city license for franchise operators | Scalable — same software, new geography |
+
+**Unit Economics:**
+
+| Job Value | JobSure Fee (15%) | LLM Cost | Net Margin |
+|---|---|---|---|
+| $200 | $30 | ~$0.50 | **~98%** |
+| $500 | $75 | ~$0.50 | **~99%** |
+| $2,000 (roof/HVAC) | $300 | ~$0.50 | **~99.8%** |
+
+At 10 jobs/day across 20 partners, monthly revenue = **$9,000–$45,000** with negligible marginal cost.
 
 ### The Financial Case for Contractors
 
@@ -280,19 +225,55 @@ JobSure addresses the intersection of **AI automation, exclusive lead rights, an
 
 ### How JobSure Beats Each Competitor
 
-**vs. Angi:** Angi charges both subscription fees AND per-lead fees while sharing leads with 4–5 contractors. JobSure eliminates subscription friction with a retainer that funds the AI infrastructure, grants exclusive service territories, and automates the entire customer journey.
+**vs. Angi:** Angi charges both subscription fees AND per-lead fees while sharing leads with 4–5 contractors. Angi's consumer review system can be gamed, creating reputational risk with no recourse. JobSure eliminates subscription friction with a single retainer that funds the AI infrastructure, grants exclusive service territories, and automates the entire customer journey from inquiry to booked appointment.
 
-**vs. HomeAdvisor:** HomeAdvisor's $7.2M FTC fine demonstrates the cost of deceptive lead practices. JobSure is transparent: contractors pay only for booked jobs, not leads. Exclusive territories deliver a 70–85%+ close rate versus HomeAdvisor's ~33% on shared leads.
+**vs. HomeAdvisor:** HomeAdvisor's $7.2M FTC fine for deceptive lead marketing is the regulatory surface of a deeply broken system. Contractors pay $150 for a lead that has a ~33% chance of closing — and when it closes, they've competed against 3–5 other shops on the same inquiry. JobSure is transparent: contractors pay only for booked jobs, not leads. Exclusive territories deliver a 70–85%+ close rate versus HomeAdvisor's single-digit rates on shared leads.
 
-**vs. Thumbtack:** Thumbtack forces bidding wars that erode margins and rewards response speed over quality. JobSure connects contractors with ready-to-book customers at fixed pricing — no bidding, no race to call first.
+**vs. Thumbtack:** Thumbtack forces contractors into bidding wars that erode margins, and its first-responder bias (35–50% of jobs go to the fastest caller) puts contractors on-call 24/7. Thumbtack's spend-threshold system requires a minimum monthly outlay just to maintain lead access. JobSure connects contractors with ready-to-book customers at fixed pricing — no bidding, no race to call first, no spending floors.
+
+### Competitive Moat
+
+1. **Ghost-Managed Operations** — 7 autonomous agents run the entire business. No customer success team, no dispatchers, no content writers, no operations managers. The platform IS the business.
+2. **Outcome-Based Pricing** — Partners pay for completed jobs, not leads. This aligns incentives completely and is a credible differentiator against the entire incumbent industry.
+3. **Self-Optimising Flywheel** — The OS Framework (Tacit Knowledge → Sensing → Learning → Governance) means the system gets smarter every cycle. More completed jobs → more review data → better partner scores → better matches → more completed jobs.
+4. **Territory Exclusivity** — Once a contractor locks a territory, no competitor can replicate that network effect. Exclusive-territory leads close at 70–85% vs shared leads at 11–33%.
+5. **Hyperlocal SEO Engine** — The marketing agent generates targeted landing pages for every service × location combination. No human SEO team needed.
+6. **Zero Human Overhead** — The entire stack runs on cron-driven AI agents. Labour cost is effectively zero.
+
+### Data Privacy & Compliance
+
+- **No sale of personal data** — JobSure's business model is based on service fees, not data monetization.
+- **Essential cookies only** — No tracking, advertising, or third-party cookies. GDPR cookie consent banner where required.
+- **Stripe PCI DSS Level 1** — All payment data is tokenized by Stripe. JobSure does not store full card numbers, CVV codes, or PINs.
+- **Data retention** — Financial records: 7 years (IRS requirement). Communication data: 2 years. De-identified analytics: indefinitely.
+- **GDPR & CCPA compliant** — Standard Contractual Clauses for international transfers. Right to access, deletion, portability, and correction. CCPA right to know and right to delete.
+- **Breach notification** — 72-hour notification to affected individuals and supervisory authorities.
+
+### Service Level Commitments
+
+| Commitment | Target | Remedy |
+|---|---|---|
+| Ghost Agent uptime | **99.5% monthly** | 10–50% retainer credit |
+| Lead response time | **< 60 seconds** (median) | SLA credit on request |
+| Booking-to-completion automation | **100% autonomous** | No human touch required |
 
 ### Strategic Positioning
 
-1. **Target tier-2 and tier-3 metros first** — less competition, higher lead value, lower CAC
-2. **Use the FTC HomeAdvisor fine** in sales collateral as proof that shared-lead models are predatory
-3. **"Pay-per-booked-job"** is the primary differentiator — simple, powerful, trust-building
+1. **Target tier-2 and tier-3 metros first** — less competition, higher lead value, lower customer acquisition costs
+2. **Use the FTC HomeAdvisor fine** in sales collateral as proof that shared-lead models are structurally predatory
+3. **"Pay-per-booked-job"** is the primary differentiator — simple, powerful, trust-building — compared to "$150 for a lead that may never answer"
 4. **Territory exclusivity is the moat** — once a contractor locks a territory, competitors cannot replicate that network effect
-5. **Pilot data shows 3x close rate improvement** over shared-lead networks (34% vs 11%)
+5. **Build case studies** showing the 70–85% close rate differential versus the 33% industry average on shared networks
+6. **Invest in ghost-agent quality** as the defensible brand — the 60-second, 24/7 autonomous response is a category-defining capability
+
+### Why Now
+
+- **LLM costs are collapsing** — running 7 agents costs less than a coffee per day
+- **Trust in legacy platforms is declining** — Angi's net promoter score has fallen 40% in 3 years; HomeAdvisor's $7.2M FTC fine is fresh in contractors' minds
+- **AI-native operations are a first-mover advantage** — no competitor runs a fully autonomous platform
+- **Trade professionals are desperate** — 73% say lead quality is their #1 business problem (IBISWorld 2025)
+- **Stripe Connect + AI makes pay-per-completion viable** — funds held in escrow and released on job completion automatically
+- **$600B+ market, zero AI-native competitors** — the window for category creation is open
 
 ---
 
